@@ -26,6 +26,7 @@ public class DemoController {
     @Autowired
     private DemoDao demoDao;
 
+
     @RequestMapping("/list")
     public String list(Model model){
         model.addAttribute("list", demoDao.findAll());

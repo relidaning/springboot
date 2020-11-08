@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="framelib::framelib">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/glance/">Glance</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" placeholder="Email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">Sign in</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Glance</h1>
+        <p>俗话说，好记性不好烂笔头，记忆就是一次次的重复...</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4">
+            <h2>今日任务</h2>
+            <p> 按记忆规律，显示今天需要重复记忆的内容. </p>
+            <p><a class="btn btn-default" href="#" role="button">开始 »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>统计信息</h2>
+            <p> 显示一些统计信息. </p>
+            <p><a class="btn btn-default" href="#" role="button">查看 »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>导入生词</h2>
+            <p> 将每天遇到的生词通过txt文档导入到系统中， 按规律进行重复记忆以加深印象达到记住的目的。 </p>
+            <p><a class="btn btn-default" href="#" role="button">导入 »</a></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>© 2016 Company, Inc.</p>
+    </footer>
+</div> <!-- /container -->
+
+
+</body>
+</html>

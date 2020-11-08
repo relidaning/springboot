@@ -29,6 +29,15 @@ public class GlanceController {
     WordDao wordDao;
 
     /**
+     * glance首页
+     */
+    @RequestMapping("/")
+    public String index(){
+        log.info("execute glance.index");
+        return "/glance/index";
+    }
+
+    /**
      * 导入单词
      */
     @RequestMapping("/impWord")
