@@ -5,7 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,8 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.expression.Maps;
 
 import java.io.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,12 +36,14 @@ public class GlanceController {
     @Autowired
     WordDao wordDao;
 
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
     /**
      * glance首页
      */
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(){
-        log.info("execute glance.index");
         return "/glance/index";
     }
 
@@ -64,11 +74,19 @@ public class GlanceController {
             if(StringUtils.isEmpty(lineTxt)){
                 if(!StringUtils.isEmpty(word.getWord())){
                     word.setImpDate(new Date());
-                    temp.setId(null);
+                    /*temp.setId(null);
                     temp.setWord(word.getWord());
-                    Example<Word> example = Example.of(temp);
-                    if(wordDao.count(example)==0){
-                        wordDao.save(word);
+                    Example<Word> example = Example.of(temp);*/
+
+                    List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord()+"' ");
+
+                    if(list==null||list.size()==0){
+//                    if(wordDao.count(example)==0){
+
+                        jdbcTemplate.update("INSERT INTO word (word, pronunciation, explain, impDate) VALUES ( '"+word.getWord()+
+                                "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getExplain()+"', '"+word.getImpDate()+"' ");
+
+//                        wordDao.save(word);
                     }
                     word_index=0;
                     word=new Word();
@@ -93,7 +111,11 @@ public class GlanceController {
 
         if(!StringUtils.isEmpty(word.getWord())){
             word.setImpDate(new Date());
-            wordDao.save(word);
+
+            jdbcTemplate.update("INSERT INTO word (word, pronunciation, explain, impDate) VALUES ( '"+word.getWord()+
+                            "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getExplain()+"', '"+word.getImpDate()+"' ");
+
+//            wordDao.save(word);
         }
 
         read.close();
@@ -115,7 +137,22 @@ public class GlanceController {
      */
     @RequestMapping("/impList")
     public String impList(Model model){
-        model.addAttribute("list", wordDao.findAll());
+//        model.addAttribute("list", wordDao.findAll());
+
+        List<Word> words = jdbcTemplate.query(" select * from word ", new RowMapper<Word>() {
+            @Override
+            public Word mapRow(ResultSet resultSet, int i) throws SQLException {
+                Word word = new Word();
+                word.setId(resultSet.getLong("id"));
+                word.setWord(resultSet.getString("word"));
+                word.setPronunciation(resultSet.getString("pronunciation"));
+                word.setExplain(resultSet.getString("explain"));
+                word.setImpDate(resultSet.getDate("impDate"));
+                return word;
+            }
+        });
+        model.addAttribute("list", words);
+
         return "/glance/impList";
     }
 

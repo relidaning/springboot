@@ -3,15 +3,14 @@ package com.lidaning.springboot.demo;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 public class Demo implements Serializable {
     @javax.persistence.Id
-    @Id@GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private int age;
