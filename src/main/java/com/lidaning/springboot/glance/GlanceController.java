@@ -3,12 +3,8 @@ package com.lidaning.springboot.glance;
 import com.lidaning.springboot.glance.util.MultipartFileToFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Example;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +12,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.expression.Maps;
 
 import java.io.*;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/glance")
@@ -71,29 +63,8 @@ public class GlanceController {
         while((lineTxt = bufferedReader.readLine()) != null){
             log.info("lineTxt = " + lineTxt);
 
-            if(StringUtils.isEmpty(lineTxt)){
-                if(!StringUtils.isEmpty(word.getWord())){
-                    word.setImpDate(new Date());
-                    /*temp.setId(null);
-                    temp.setWord(word.getWord());
-                    Example<Word> example = Example.of(temp);*/
-
-                    List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord()+"' ");
-
-                    if(list==null||list.size()==0){
-//                    if(wordDao.count(example)==0){
-
-                        jdbcTemplate.update("INSERT INTO word (word, pronunciation, explain, impDate) VALUES ( '"+word.getWord()+
-                                "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getExplain()+"', '"+word.getImpDate()+"' ");
-
-//                        wordDao.save(word);
-                    }
-                    word_index=0;
-                    word=new Word();
-                }
-
-                continue;
-            }else{
+            if(!lineTxt.trim().equals("")){
+                lineTxt=lineTxt.trim();
                 word_index++;
 
                 switch (word_index){
@@ -104,18 +75,50 @@ public class GlanceController {
                         word.setPronunciation(lineTxt);
                         break;
                     default:
-                        word.setExplain(word.getExplain()==null?"":word.getExplain()+lineTxt);
+                        word.setDescription(word.getDescription()==null?lineTxt:word.getDescription()+lineTxt);
                 }
+            }else{
+                if(word != null && word.getWord()!=null && !word.getWord().trim().equals("")){
+                    word.setImpDate(new Date());
+                    /*temp.setId(null);
+                    temp.setWord(word.getWord());
+                    Example<Word> example = Example.of(temp);*/
+
+                    List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord().trim()+"' ");
+                    log.info(list==null?"0":String.valueOf(list.size()));
+
+                    if(list==null||list.size()==0){
+//                    if(wordDao.count(example)==0){
+
+                        jdbcTemplate.update("INSERT INTO word (word, pronunciation, description ) VALUES (  '"+word.getWord().trim()+
+                                "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getDescription()+"' ) ");
+
+//                        wordDao.save(word);
+                    }
+                    word_index=0;
+                    word=new Word();
+                }
+
             }
         }
 
-        if(!StringUtils.isEmpty(word.getWord())){
+        if(word != null && word.getWord()!=null && !word.getWord().trim().equals("")){
             word.setImpDate(new Date());
+                    /*temp.setId(null);
+                    temp.setWord(word.getWord());
+                    Example<Word> example = Example.of(temp);*/
 
-            jdbcTemplate.update("INSERT INTO word (word, pronunciation, explain, impDate) VALUES ( '"+word.getWord()+
-                            "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getExplain()+"', '"+word.getImpDate()+"' ");
+            List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord().trim()+"' ");
+            log.info(list==null?"0":String.valueOf(list.size()));
 
-//            wordDao.save(word);
+            if(list==null||list.size()==0){
+//                    if(wordDao.count(example)==0){
+
+                jdbcTemplate.update("INSERT INTO word (word, pronunciation, description ) VALUES (  '"+word.getWord().trim()+
+                        "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getDescription()+"' ) ");
+
+//                        wordDao.save(word);
+            }
         }
 
         read.close();
@@ -146,7 +149,7 @@ public class GlanceController {
                 word.setId(resultSet.getLong("id"));
                 word.setWord(resultSet.getString("word"));
                 word.setPronunciation(resultSet.getString("pronunciation"));
-                word.setExplain(resultSet.getString("explain"));
+                word.setDescription(resultSet.getString("description"));
                 word.setImpDate(resultSet.getDate("impDate"));
                 return word;
             }
@@ -161,7 +164,10 @@ public class GlanceController {
      */
     @RequestMapping("/del")
     public String del(Word word){
-        wordDao.delete(word);
+
+        jdbcTemplate.execute(" delete from word where id = '"+word.getId()+"' ");
+
+//        wordDao.delete(word);
         return "redirect:impList";
     }
 

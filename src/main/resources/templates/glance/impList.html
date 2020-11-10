@@ -2,16 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="framelib::framelib">
 </head>
-<body>
 <script>
-    function add(){
-        window.location.href="edit";
+    function edit(){
+        window.location.href="/glance/impWord";
     }
 </script>
+<body>
+<nav th:replace="/glance/common/common::header"></nav>
 <div class="container-fluid">
     <div class="row">
-        <h2>事项</h2>
-        <button type="button" class="btn btn-lg btn-primary text-right" onclick="add();">添加</button>
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4">
+            <div style="margin-top: 10px;">
+                <span style="font-size: 36px;">单词</span>
+                <a class="btn btn-lg btn-primary" style="float: right;" onclick="edit();">添加</a>
+            </div>
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
@@ -29,7 +33,7 @@
                     <td th:text="${stat.index+1}">#</td>
                     <td th:text="${word.word}">&nbsp;</td>
                     <td th:text="${word.pronunciation}">&nbsp;</td>
-                    <td th:text="${word.explain}">&nbsp;</td>
+                    <td th:text="${word.description}">&nbsp;</td>
                     <td th:text="${word.impDate}">&nbsp;</td>
                     <td>&nbsp;
                         <a th:text="删除" th:href="@{'del?id='+${word.id}}">&nbsp;</a>
@@ -38,6 +42,7 @@
                 </tbody>
             </table>
         </div>
+        </main>
     </div></div>
 </body>
 </html>

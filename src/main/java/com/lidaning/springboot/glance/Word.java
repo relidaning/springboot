@@ -13,7 +13,7 @@ public class Word {
     private Long id;
     private String word;
     private String pronunciation;
-    private String explain;
+    private String description;
     private Date impDate;
 
     public Long getId() {
@@ -40,12 +40,12 @@ public class Word {
         this.pronunciation = pronunciation;
     }
 
-    public String getExplain() {
-        return explain;
+    public String getDescription() {
+        return description;
     }
 
-    public void setExplain(String explain) {
-        this.explain = explain;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getImpDate() {
