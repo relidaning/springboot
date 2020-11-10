@@ -25,11 +25,14 @@ public class GlanceController {
 
     Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
+    /*@Autowired
     WordDao wordDao;
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;*/
+
+    @Autowired
+    WordService wordService;
 
     /**
      * glance首页
@@ -80,18 +83,22 @@ public class GlanceController {
             }else{
                 if(word != null && word.getWord()!=null && !word.getWord().trim().equals("")){
                     word.setImpDate(new Date());
-                    /*temp.setId(null);
+                    temp.setId(null);
                     temp.setWord(word.getWord());
-                    Example<Word> example = Example.of(temp);*/
+                    /*Example<Word> example = Example.of(temp);*/
 
-                    List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord().trim()+"' ");
+//                    List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord().trim()+"' ");
+
+                    List list=wordService.select(temp);
                     log.info(list==null?"0":String.valueOf(list.size()));
 
                     if(list==null||list.size()==0){
 //                    if(wordDao.count(example)==0){
 
-                        jdbcTemplate.update("INSERT INTO word (word, pronunciation, description ) VALUES (  '"+word.getWord().trim()+
-                                "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getDescription()+"' ) ");
+                        /*jdbcTemplate.update("INSERT INTO word (word, pronunciation, description ) VALUES (  '"+word.getWord().trim()+
+                                "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getDescription()+"' ) ");*/
+
+                        wordService.insert(word);
 
 //                        wordDao.save(word);
                     }
@@ -104,18 +111,22 @@ public class GlanceController {
 
         if(word != null && word.getWord()!=null && !word.getWord().trim().equals("")){
             word.setImpDate(new Date());
-                    /*temp.setId(null);
+                    temp.setId(null);
                     temp.setWord(word.getWord());
-                    Example<Word> example = Example.of(temp);*/
+                    /*Example<Word> example = Example.of(temp);*/
 
-            List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord().trim()+"' ");
+//            List list=jdbcTemplate.queryForList(" select * from word where word = '"+word.getWord().trim()+"' ");
+
+            List list=wordService.select(temp);
             log.info(list==null?"0":String.valueOf(list.size()));
 
             if(list==null||list.size()==0){
 //                    if(wordDao.count(example)==0){
 
-                jdbcTemplate.update("INSERT INTO word (word, pronunciation, description ) VALUES (  '"+word.getWord().trim()+
-                        "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getDescription()+"' ) ");
+                /*jdbcTemplate.update("INSERT INTO word (word, pronunciation, description ) VALUES (  '"+word.getWord().trim()+
+                        "', '"+word.getPronunciation().replaceAll("'", "&#180;")+"', '"+word.getDescription()+"' ) ");*/
+
+                wordService.insert(word);
 
 //                        wordDao.save(word);
             }
@@ -142,7 +153,7 @@ public class GlanceController {
     public String impList(Model model){
 //        model.addAttribute("list", wordDao.findAll());
 
-        List<Word> words = jdbcTemplate.query(" select * from word ", new RowMapper<Word>() {
+        /*List<Word> words = jdbcTemplate.query(" select * from word ", new RowMapper<Word>() {
             @Override
             public Word mapRow(ResultSet resultSet, int i) throws SQLException {
                 Word word = new Word();
@@ -153,7 +164,9 @@ public class GlanceController {
                 word.setImpDate(resultSet.getDate("impDate"));
                 return word;
             }
-        });
+        });*/
+
+        List words=wordService.select(null);
         model.addAttribute("list", words);
 
         return "/glance/impList";
@@ -165,9 +178,12 @@ public class GlanceController {
     @RequestMapping("/del")
     public String del(Word word){
 
-        jdbcTemplate.execute(" delete from word where id = '"+word.getId()+"' ");
+//        jdbcTemplate.execute(" delete from word where id = '"+word.getId()+"' ");
 
 //        wordDao.delete(word);
+
+        wordService.delete(new Long(word.getId()).intValue());
+
         return "redirect:impList";
     }
 

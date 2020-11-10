@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaning.springboot.glance.WordMapper">
+
+    <resultMap id="BaseResultMap" type="com.lidaning.springboot.glance.Word">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="word" jdbcType="VARCHAR" property="word" />
+        <result column="pronunciation" jdbcType="VARCHAR" property="pronunciation" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="impDate" jdbcType="DATE" property="impDate" />
+    </resultMap>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from word where id = #{id}
+    </select>
+
+    <select id="select" resultMap="com.lidaning.springboot.glance.Word" >
+        select * from word 
+        where 1=1
+
+        <!--<if test="word!=null and word!=''">
+            AND word = #{word}
+        </if>
+
+        <if test="pronunciation!=null and pronunciation!=''">
+            AND pronunciation = #{pronunciation}
+        </if>
+
+        <if test="description!=null and description!=''">
+            AND description = #{description}
+        </if>
+
+        <if test="impDate!=null and impDate!=''">
+            AND impDate = #{impDate}
+        </if>-->
+
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from word
+        where id=#{id}
+    </delete>
+
+    <delete id="update" parameterMap="word">
+        update word set
+        id = #{id}
+        <if test="word!=null and word!=''">
+            ,word = #{word}
+        </if>
+
+        <if test="pronunciation!=null and pronunciation!=''">
+            , pronunciation = #{pronunciation}
+        </if>
+
+        <if test="description!=null and description!=''">
+            , description = #{description}
+        </if>
+
+        <if test="impDate!=null and impDate!=''">
+            , impDate = #{impDate}
+        </if>
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterMap="word">
+        insert into word
+        (word, pronunciation, description, impDate)
+         values
+        (#{word}, #{pronunciation}, #{description}, #{impDate})
+    </insert>
+
+</mapper>
