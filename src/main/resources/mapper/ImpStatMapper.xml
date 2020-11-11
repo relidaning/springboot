@@ -10,11 +10,11 @@
         select * from impStat
         where 1=1
 
-        <if test="impdate!=null and impdate!=''">
+        <if test="impdate!=null">
             AND impDate = #{impDate}
         </if>
 
-        <if test="impNum!=null and impNum!=''">
+        <if test="impNum!=null">
             AND impNum = #{impNum}
         </if>
 
@@ -28,11 +28,11 @@
     <delete id="update" parameterType="com.lidaning.springboot.glance.ImpStat">
         update impStat set
         id = #{id}
-        <if test="impDate!=null and impDate!=''">
+        <if test="impDate!=null">
             ,impDate = #{impDate}
         </if>
 
-        <if test="impNum!=null and impNum!=''">
+        <if test="impNum!=null">
             , impNum = #{impNum}
         </if>
 
@@ -43,7 +43,7 @@
         insert into impStat
         (impDate, impNum)
          values
-        (#{impDate}, #{impStat})
+        (#{impDate}, #{impNum})
     </insert>
 
 </mapper>
