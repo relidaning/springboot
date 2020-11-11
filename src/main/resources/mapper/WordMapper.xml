@@ -10,15 +10,15 @@
         <result column="impDate" jdbcType="DATE" property="impDate" />
     </resultMap>
 
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="findById" resultType="com.lidaning.springboot.glance.Word" parameterType="java.lang.Integer">
         select * from word where id = #{id}
     </select>
 
-    <select id="select" resultMap="com.lidaning.springboot.glance.Word" >
+    <select id="select" resultType="com.lidaning.springboot.glance.Word" >
         select * from word 
         where 1=1
 
-        <!--<if test="word!=null and word!=''">
+        <if test="word!=null and word!=''">
             AND word = #{word}
         </if>
 
@@ -32,7 +32,7 @@
 
         <if test="impDate!=null and impDate!=''">
             AND impDate = #{impDate}
-        </if>-->
+        </if>
 
     </select>
 
@@ -41,7 +41,7 @@
         where id=#{id}
     </delete>
 
-    <delete id="update" parameterMap="word">
+    <delete id="update" parameterType="com.lidaning.springboot.glance.Word">
         update word set
         id = #{id}
         <if test="word!=null and word!=''">
@@ -62,7 +62,7 @@
         where id = #{id}
     </delete>
 
-    <insert id="insert" parameterMap="word">
+    <insert id="insert" parameterType="com.lidaning.springboot.glance.Word">
         insert into word
         (word, pronunciation, description, impDate)
          values

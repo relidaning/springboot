@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaning.springboot.glance.ImpStatMapper">
+
+    <select id="findById" resultType="com.lidaning.springboot.glance.ImpStat" parameterType="java.lang.Integer">
+        select * from impStat where id = #{id}
+    </select>
+
+    <select id="select" resultType="com.lidaning.springboot.glance.ImpStat" >
+        select * from impStat
+        where 1=1
+
+        <if test="impdate!=null and impdate!=''">
+            AND impDate = #{impDate}
+        </if>
+
+        <if test="impNum!=null and impNum!=''">
+            AND impNum = #{impNum}
+        </if>
+
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from impStat
+        where id=#{id}
+    </delete>
+
+    <delete id="update" parameterType="com.lidaning.springboot.glance.ImpStat">
+        update impStat set
+        id = #{id}
+        <if test="impDate!=null and impDate!=''">
+            ,impDate = #{impDate}
+        </if>
+
+        <if test="impNum!=null and impNum!=''">
+            , impNum = #{impNum}
+        </if>
+
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.lidaning.springboot.glance.ImpStat">
+        insert into impStat
+        (impDate, impNum)
+         values
+        (#{impDate}, #{impStat})
+    </insert>
+
+</mapper>
