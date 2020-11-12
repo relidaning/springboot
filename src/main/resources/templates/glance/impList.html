@@ -34,7 +34,7 @@
                     <td th:text="${word.word}">&nbsp;</td>
                     <td th:text="${word.pronunciation}">&nbsp;</td>
                     <td th:text="${word.description}">&nbsp;</td>
-                    <td th:text="${word.impDate}">&nbsp;</td>
+                    <td th:text="${#dates.format(word.impDate, 'yyyy-MM-dd')}">&nbsp;</td>
                     <td>&nbsp;
                         <a th:text="删除" th:href="@{'del?id='+${word.id}}">&nbsp;</a>
                     </td>

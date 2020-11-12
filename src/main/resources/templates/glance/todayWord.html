@@ -11,8 +11,8 @@
 <!-- Swiper   swiper-slide-prev swiper-slide-next -->
 <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
 
-    <div class="swiper-wrapper" th:each="word, stat : ${list}">
-        <div class="swiper-slide swiper-slide-active" style="width: 100%;" >
+    <div class="swiper-wrapper">
+        <div th:each="word, stat : ${list}" class="swiper-slide" style="width: 100%;" >
             [[${word.word}]]<br/>[[${word.pronunciation}]]<br/>[[${word.description}]]
         </div>
     </div>
@@ -36,6 +36,8 @@
             prevEl: '.swiper-button-prev',
         },
     });
+
+    $(".swiper-slide:first").addClass("swiper-slide-active");
 </script>
 
 </body>

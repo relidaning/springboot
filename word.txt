@@ -3,3 +3,45 @@ stash
 v.	存放; 贮藏; 隐藏;
 n.	一批贮藏物;
 
+
+cryptography
+英[krɪpˈtɒɡrəfi]美[krɪpˈtɑːɡrəfi]
+n.	密码学; 密码术;
+
+
+backend	
+英[ˌbækˈɛnd]美[ˌbæˈkɛnd]
+网络	后端; 后台; 后段; 编译器后端;
+
+prevent	
+英[prɪˈvent]美[prɪˈvent]
+v.	阻止; 阻碍; 阻挠;
+
+wizard	
+英[ˈwɪzəd]美[ˈwɪzərd]
+n.	(传说中的) 男巫，术士; 行家; 能手; 奇才; 向导(程序);
+
+embedded	
+英[ɪmˈbedɪd]美[ɪmˈbedɪd]
+v.	把…牢牢地嵌入(或插入、埋入); 派遣(战地记者、摄影记者等); 嵌入(在I'm aware that she knows句中，she knows为内嵌句);
+
+concern	
+英[kənˈsɜːn]美[kənˈsɜːrn]
+v.	影响，牵涉(某人); 与…有关; 涉及; 让(某人)担忧;
+n.	(尤指许多人共同的) 担心，忧虑; 关爱; 关心; (对人、组织等) 重要的事情;
+
+intensive	
+英[ɪnˈtensɪv]美[ɪnˈtensɪv]
+adj.	短时间内集中紧张进行的; 密集的; 彻底的; 十分细致的; 集约的;
+n.	加强器; [语] 强义词; 强调成份;
+
+persistent	
+英[pəˈsɪstənt]美[pərˈsɪstənt]
+adj.	执著的; 不屈不挠的; 坚持不懈的; 连绵的; 持续的; 反复出现的;
+
+
+
+
+
+
+

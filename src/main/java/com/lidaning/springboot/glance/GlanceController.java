@@ -169,7 +169,7 @@ public class GlanceController {
      * 导入记录列表
      */
     @RequestMapping("/impList")
-    public String impList(Model model){
+    public String impList(Model model) throws ParseException {
 //        model.addAttribute("list", wordDao.findAll());
 
         /*List<Word> words = jdbcTemplate.query(" select * from word ", new RowMapper<Word>() {
@@ -184,8 +184,10 @@ public class GlanceController {
                 return word;
             }
         });*/
-
-        List words=wordService.select(null);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Word word = new Word();
+        word.setImpDate(sdf.parse(sdf.format(new Date())));
+        List words=wordService.select(word);
         model.addAttribute("list", words);
 
         return "/glance/impList";
