@@ -11,8 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
+
+import static javafx.beans.binding.Bindings.select;
 
 @Controller
 @RequestMapping("/glance")
@@ -31,12 +37,16 @@ public class GlanceController {
 
     @Autowired
     ImpStatService impStatService;
+
+    @Autowired
+    MemoryInfoService memoryInfoService;
+
     /**
      * glance首页
      */
     @RequestMapping("/index")
     public String index(){
-        return "index";
+        return "glance/index";
     }
 
     /**
@@ -138,7 +148,19 @@ public class GlanceController {
      * 今天需要复习的单词
      */
     @RequestMapping("todayWord")
-    public String todayWord(){
+    public String todayWord(Model model) throws ParseException {
+
+        List list=new ArrayList();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        MemoryInfo param=new MemoryInfo();
+        param.setRepeatDate(sdf.parse(sdf.format(new Date())));
+        List<MemoryInfo> memoryInfos = memoryInfoService.select(param);
+        Word word=new Word();
+        for(MemoryInfo memoryInfo:memoryInfos){
+            word = wordService.findById(memoryInfo.getWordId());
+            list.add(word);
+        }
+        model.addAttribute("list", list);
 
         return "/glance/todayWord";
     }
@@ -191,7 +213,7 @@ public class GlanceController {
     @RequestMapping("/impStat")
     public String impStat(Model model){
         List list=impStatService.select(null);
-        model.addAttribute(list);
+        model.addAttribute("list",list);
         return "/glance/impStat";
     }
 }

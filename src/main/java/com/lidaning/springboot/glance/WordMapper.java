@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface WordMapper {
 
-    Word findById();
+    Word findById(int id);
 
     List<Word> select(Word word);
 

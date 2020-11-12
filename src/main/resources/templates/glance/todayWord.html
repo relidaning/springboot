@@ -1,23 +1,42 @@
-<!DOCTYPE HTML>
+
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>template</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+<head th:replace="framelib::framelib">
+</head>
+<link th:href="@{/swiper/style.css}" rel="stylesheet">
+<link th:href="@{/swiper/swiper.min.css}" rel="stylesheet">
+<link th:href="@{/swiper/swiper-bundle.min.css}" rel="stylesheet">
 <body>
-<p th:text="${message}">Welcome to todayword!</p>
+<nav th:replace="/glance/common/common::header"></nav>
+<!-- Swiper   swiper-slide-prev swiper-slide-next -->
+<div class="swiper-container swiper-container-initialized swiper-container-horizontal">
 
+    <div class="swiper-wrapper" th:each="word, stat : ${list}">
+        <div class="swiper-slide swiper-slide-active" style="width: 100%;" >
+            [[${word.word}]]<br/>[[${word.pronunciation}]]<br/>[[${word.description}]]
+        </div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination swiper-pagination-progressbar" style="margin-top: 85%; height: 4%;"><span class="swiper-pagination-progressbar-fill" style="transform: translate3d(0px, 0px, 0px) scaleX(0.1) scaleY(1); transition: all 300ms ease 0s;"></span></div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"></div>
+    <div class="swiper-button-prev swiper-button-disabled" tabindex="-1" role="button" aria-label="Previous slide" aria-disabled="true"></div>
+    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script th:src="@{/swiper/swiper.min.js}"></script>
+<script th:src="@{/swiper/swiper-bundle.min.js}"></script>
+<script type="text/javascript">
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'progressbar',
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
+
 </body>
 </html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaning.springboot.glance.MemoryScheduleMapper">
+
+    <select id="get" resultType="com.lidaning.springboot.glance.MemorySchedule"
+            parameterType="com.lidaning.springboot.glance.MemorySchedule">
+        select * from memorySchedule where id = 1
+    </select>
+
+</mapper>

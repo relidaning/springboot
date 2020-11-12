@@ -11,8 +11,8 @@ public class WordService {
     @Autowired
     WordMapper wordMapper;
 
-    Word findById(){
-        return wordMapper.findById();
+    Word findById(int id){
+        return wordMapper.findById(id);
     }
 
     List<Word> select(Word word){

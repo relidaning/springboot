@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lidaning.springboot.glance.MemoryInfoMapper">
+
+    <select id="findById" resultType="com.lidaning.springboot.glance.MemoryInfo" parameterType="java.lang.Integer">
+        select * from memoryInfo where id = #{id}
+    </select>
+
+    <select id="select" resultType="com.lidaning.springboot.glance.MemoryInfo" >
+        select * from memoryInfo
+        where 1=1
+
+        <if test="wordId!=null and wordId != 0">
+            AND wordId = #{wordId}
+        </if>
+
+        <if test="repeatTimes!=null and repeatTimes != 0">
+            AND repeatTimes = #{repeatTimes}
+        </if>
+
+        <if test="repeatDate!=null">
+            AND date(repeatDate) = #{repeatDate}
+        </if>
+
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from memoryInfo
+        where id=#{id}
+    </delete>
+
+    <delete id="update" parameterType="com.lidaning.springboot.glance.MemoryInfo">
+        update memoryInfo set
+        id = #{id}
+        <if test="wordId!=null and wordId != 0">
+            ,wordId = #{wordId}
+        </if>
+
+        <if test="repeatTimes!=null and repeatTimes != 0">
+            , repeatTimes = #{repeatTimes}
+        </if>
+
+        <if test="repeatDate!=null">
+            , repeatDate = #{repeatDate}
+        </if>
+
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.lidaning.springboot.glance.MemoryInfo">
+        insert into memoryInfo
+        (wordId, repeatTimes, repeatDate)
+         values
+        (#{wordId}, #{repeatTimes}, #{repeatDate})
+    </insert>
+
+</mapper>

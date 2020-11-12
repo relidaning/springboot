@@ -20,7 +20,7 @@
         <tbody>
         <tr  th:each="impStat, stat : ${list}">
             <td th:text="${stat.index+1}">#</td>
-            <td th:text="${impStat.impDate}">&nbsp;</td>
+            <td th:text="${#dates.format(impStat.impDate, 'yyyy-MM-dd')}">&nbsp;</td>
             <td th:text="${impStat.impNum}">&nbsp;</td>
             <td>&nbsp;
                 <a >查看</a>
