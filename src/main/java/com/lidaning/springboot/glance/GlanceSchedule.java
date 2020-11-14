@@ -69,9 +69,9 @@ public class GlanceSchedule {
      *  2，已经重复过的单词，如果重复日期过期，查询当前单词重复次数，上次重复日期+下次间隔天数    TODO
      *  3，已完成重复单词   TODO
      */
-    @Scheduled(cron = "0 47 22 * * ?")
+    @Scheduled(cron = "0 10 1 * * ?")
     public void genRepeatInfo() throws ParseException {
-
+        log.info("execute scheduleMethod genRepeatInfo...");
         //1
         List<Word> words = jdbcTemplate.query(" select * from word w " +
                 "  where not EXISTS (select 1 from memoryinfo m where m.wordId = w.id) ", new RowMapper<Word>() {
@@ -97,12 +97,13 @@ public class GlanceSchedule {
         }
 
         //2
-        List<MemoryInfo> memoryInfos = jdbcTemplate.query(" select * from memoryinfo t where t.repeatDate < "+
-                new java.sql.Date(sdf.parse(sdf.format(new Date())).getTime())+"  ", new RowMapper<MemoryInfo>() {
+
+        List<MemoryInfo> memoryInfos = jdbcTemplate.query(" select * from memoryinfo t where date_format(t.repeatDate,'%Y-%m-%d') < '"+
+                sdf.format(new Date())+"'  ", new RowMapper<MemoryInfo>() {
             @Override
             public MemoryInfo mapRow(ResultSet resultSet, int i) throws SQLException {
                 MemoryInfo memoryInfo = new MemoryInfo();
-                memoryInfo.setWordId(resultSet.getInt("wrodId"));
+                memoryInfo.setWordId(resultSet.getInt("wordId"));
                 memoryInfo.setRepeatTimes(resultSet.getInt("repeatTimes"));
                 memoryInfo.setRepeatDate(resultSet.getDate("repeatDate"));
                 return memoryInfo;
@@ -116,26 +117,28 @@ public class GlanceSchedule {
             int interval_days= 0;
             switch(m.getRepeatTimes()+1){
                 case 2:
-                    interval_days=scheduleRule.getSecond();
+                    interval_days=Integer.valueOf(scheduleRule.getSecond());
                     break;
                 case 3:
-                    interval_days=scheduleRule.getThird();
+                    interval_days=Integer.valueOf(scheduleRule.getThird());
                     break;
                 case 4:
-                    interval_days=scheduleRule.getFourth();
+                    interval_days=Integer.valueOf(scheduleRule.getFourth());
                     break;
                 case 5:
-                    interval_days=scheduleRule.getFifth();
+                    interval_days=Integer.valueOf(scheduleRule.getFifth());
                     break;
                 case 6:
-                    interval_days=scheduleRule.getSixth();
+                    interval_days=Integer.valueOf(scheduleRule.getSixth());
                     break;
                 case 7:
-                    interval_days=scheduleRule.getSeventh();
+                    interval_days=Integer.valueOf(scheduleRule.getSeventh());
                     break;
                 case 8:
-                    interval_days=scheduleRule.getEighth();
+                    interval_days=Integer.valueOf(scheduleRule.getEighth());
                     break;
+
+
             }
 
             calendar.setTime(sdf.parse(sdf.format(m.getRepeatDate())));
@@ -144,6 +147,7 @@ public class GlanceSchedule {
             temp.setRepeatTimes(m.getRepeatTimes()+1);
             temp.setRepeatDate(calendar.getTime());
             memoryInfoService.insert(temp);
+
         }
 
     }

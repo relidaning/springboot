@@ -7,80 +7,80 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "com.lidaning.springboot.glance")
+@ConfigurationProperties(prefix = "com.lidaning.springboot.glance.schedule")
 @PropertySource("classpath:config/schedulerule.properties")
 public class ScheduleRule {
 
-    private int first;
-    private int second;
-    private int third;
-    private int fourth;
-    private int fifth;
-    private int sixth;
-    private int seventh;
-    private int eighth;
+    private String first;
+    private String second;
+    private String third;
+    private String fourth;
+    private String fifth;
+    private String sixth;
+    private String seventh;
+    private String eighth;
 
-    public int getFirst() {
+    public String getFirst() {
         return first;
     }
 
-    public void setFirst(int first) {
+    public void setFirst(String first) {
         this.first = first;
     }
 
-    public int getSecond() {
+    public String getSecond() {
         return second;
     }
 
-    public void setSecond(int second) {
+    public void setSecond(String second) {
         this.second = second;
     }
 
-    public int getThird() {
+    public String getThird() {
         return third;
     }
 
-    public void setThird(int third) {
+    public void setThird(String third) {
         this.third = third;
     }
 
-    public int getFourth() {
+    public String getFourth() {
         return fourth;
     }
 
-    public void setFourth(int fourth) {
+    public void setFourth(String fourth) {
         this.fourth = fourth;
     }
 
-    public int getFifth() {
+    public String getFifth() {
         return fifth;
     }
 
-    public void setFifth(int fifth) {
+    public void setFifth(String fifth) {
         this.fifth = fifth;
     }
 
-    public int getSixth() {
+    public String getSixth() {
         return sixth;
     }
 
-    public void setSixth(int sixth) {
+    public void setSixth(String sixth) {
         this.sixth = sixth;
     }
 
-    public int getSeventh() {
+    public String getSeventh() {
         return seventh;
     }
 
-    public void setSeventh(int seventh) {
+    public void setSeventh(String seventh) {
         this.seventh = seventh;
     }
 
-    public int getEighth() {
+    public String getEighth() {
         return eighth;
     }
 
-    public void setEighth(int eighth) {
+    public void setEighth(String eighth) {
         this.eighth = eighth;
     }
 }
