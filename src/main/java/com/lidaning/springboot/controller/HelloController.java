@@ -35,9 +35,10 @@ public class HelloController {
     }
 
     @RequestMapping("template")
-    public String template(){
+    public String template(Model model){
         logger.info(" execute template method ... ");
-        return "/templates/template";
+        model.addAttribute("msg", "this is a template");
+        return "templates/template";
     }
 
     @ResponseBody

@@ -162,7 +162,7 @@ public class GlanceController {
         }
         model.addAttribute("list", list);
 
-        return "/glance/todayWord";
+        return "glance/todayWord";
     }
 
     /**
@@ -190,7 +190,7 @@ public class GlanceController {
         List words=wordService.select(word);
         model.addAttribute("list", words);
 
-        return "/glance/impList";
+        return "glance/impList";
     }
 
     /**
@@ -216,6 +216,6 @@ public class GlanceController {
     public String impStat(Model model){
         List list=impStatService.select(null);
         model.addAttribute("list",list);
-        return "/glance/impStat";
+        return "glance/impStat";
     }
 }
