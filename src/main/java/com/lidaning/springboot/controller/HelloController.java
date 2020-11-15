@@ -1,8 +1,6 @@
 package com.lidaning.springboot.controller;
 
 import com.lidaning.springboot.glance.MemoryInfoService;
-import com.lidaning.springboot.glance.MemorySchedule;
-import com.lidaning.springboot.glance.MemoryScheduleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,6 @@ public class HelloController {
     MemoryInfoService memoryInfoService;
 
     @Autowired
-    MemoryScheduleService memoryScheduleService;
 
     @ResponseBody
     @RequestMapping("/hello")
@@ -45,12 +42,6 @@ public class HelloController {
     @RequestMapping("/memoryInfo")
     public List testMemoryInfo(){
         return memoryInfoService.select(null);
-    }
-
-    @ResponseBody
-    @RequestMapping("/memorySchedule")
-    public MemorySchedule testMemorySchedule(){
-        return memoryScheduleService.get();
     }
 
 }
