@@ -98,8 +98,10 @@ public class GlanceSchedule {
 
         //2
 
-        List<MemoryInfo> memoryInfos = jdbcTemplate.query(" select * from memoryinfo t where date_format(t.repeatDate,'%Y-%m-%d') < '"+
-                sdf.format(new Date())+"'  ", new RowMapper<MemoryInfo>() {
+        List<MemoryInfo> memoryInfos = jdbcTemplate.query(" select wordid as wordId, rtimes as repeatTimes, rdate as repeatDate from ( " +
+                " select wordid, max(repeatTimes) as rtimes, max(repeatDate) as rdate from memoryinfo " +
+                " group by wordid  ) t" +
+                " where date_format(t.rdate,'%Y-%m-%d') < "+sdf.format(new Date())+" ", new RowMapper<MemoryInfo>() {
             @Override
             public MemoryInfo mapRow(ResultSet resultSet, int i) throws SQLException {
                 MemoryInfo memoryInfo = new MemoryInfo();
