@@ -73,6 +73,7 @@ public class GlanceSchedule {
     public void genRepeatInfo() throws ParseException {
         log.info("execute scheduleMethod genRepeatInfo...");
         //1
+        Calendar calendar=Calendar.getInstance();
         List<Word> words = jdbcTemplate.query(" select * from word w " +
                 "  where not EXISTS (select 1 from memoryinfo m where m.wordId = w.id) ", new RowMapper<Word>() {
             @Override
@@ -89,10 +90,12 @@ public class GlanceSchedule {
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         for(Word w: words){
+            calendar.setTime(w.getImpDate());
+            calendar.add(5,1);
             MemoryInfo m = new MemoryInfo();
             m.setWordId(new Long(w.getId()).intValue());
             m.setRepeatTimes(1);
-            m.setRepeatDate(sdf.parse(sdf.format(w.getImpDate())));
+            m.setRepeatDate(calendar.getTime());
             memoryInfoService.insert(m);
         }
 
@@ -112,7 +115,6 @@ public class GlanceSchedule {
             }
         });
 
-        Calendar calendar=Calendar.getInstance();
         for(MemoryInfo m:memoryInfos){
             MemoryInfo temp=new MemoryInfo();
 
