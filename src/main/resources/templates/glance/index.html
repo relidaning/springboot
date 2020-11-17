@@ -11,7 +11,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Glance</h1>
-        <p>俗话说，好记性不好烂笔头，记忆就是一次次的重复...</p>
+        <p>俗话说，好记性不如烂笔头，记忆就是一次次的重复...</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
     </div>
 </div>
@@ -43,6 +43,22 @@
     </footer>
 </div> <!-- /container -->
 
-
+<script>
+    function funSubmit(){
+        console.log('login...');
+        $.ajax({
+            url:"/user/login",
+            type:"post",
+            data:$("#loginForm").serialize(),
+            success:function(data){
+                if(data.code=='500'){
+                    alert('登录失败');
+                }else if(data.code=='200'){
+                    alert('登录成功');
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>
