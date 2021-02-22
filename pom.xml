@@ -131,9 +131,9 @@
                 <targetPath>META-INF/classes/resources</targetPath>
             </resource>-->
 
-            <resource>
+            <!--<resource>
                 <directory>src/main/resources</directory>
-            </resource>
+            </resource>-->
         </resources>
 
 
